@@ -1,0 +1,5 @@
+# for scraping
+playwright
+beautifulsoup4
+# for data cleaning/transformation
+pandas
