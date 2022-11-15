@@ -11,7 +11,7 @@ The user interface is pretty neat. When looking into products of the same kind (
 
 - Recommendation based on explicit product attributes rather than collaborative filtering 
   - Unlike consumables/clothes/media, the product attributes for a phone or laptop are ummm.. more _objective_? For ex, aesthetic of a particular sneakers line is sort of nebulous, so it needs to be modeled using aggregated shopping data. Say, clustering user profiles with similar purchases. Whereas, the utility of electronic purchases can be better decomposed into product specifications, like battery life and camera quality. 
-  - Electronic purchases are expensive, so the cost of a sub-optimal recommendation is high. Also, people don't buy them very often, so I am curious how much signal can be derived from sparse purchase data. For ex, shopping search results over-index on popularity when ranking. 
+  - Electronic purchases are expensive, so the cost of a sub-optimal recommendation is high. Also, people don't buy them very often, so I am curious how much signal can be derived from sparse purchase data. For ex, shopping search results over-index on popularity when ranking ("similar users also bought this"). 
 
 - Serializable search state
   - People often seek recommendations from friends, so tracking user supplied responses as an attribute-value map makes sharing easy. However, I don't know if there is randomization/A-B testing involved since the ranked results will show up differently in that case. 
@@ -58,6 +58,11 @@ The upside is having a sales person to help you navigate the product; I don't th
 
 The disadvantage is having a limited set of options and a sales person biased towards finalizing a sale. Further, considering variety in product specifications, and no automation to help through with it, you are likely to be left with buyer's regret. 
 
+### Possible alternatives
+
+I found a stealth startup called [Tonita](https://www.tonita.co/) with the objective of "reimagining online commerce search". Considering previous work from one of the founders, they seem to build around a natural language based search experience. When launched, I expect it looks something akin to Google shopping, but more conversational. 
+
+The Google shopping system is described in this [paper](https://arxiv.org/abs/2109.00702). 
 
 ## Feature ideas
 
@@ -67,13 +72,14 @@ Thinking through ways to improve PerfectRec as a shopping assistant.
   - PerfectRec collects user preferences one at a time, however they apply together to the full catalog. 
   - We could let users pivot on an item that they like, like say, a Macbook Air when considering laptops. Then the interface could suggest similar items which trade off attributes (say, RAM for GPU memory) but within a small range. 
 
-- Navigation friendliness
+- Navigation friendly
   - The current interface is a decision support tool though shopping often is more exploratory. People love browsing products they probably won't purchase, or discovering products they don't usually come across. 
   - Some poorly thought ideas
     - Add a widget showing the current set of preferences, similar to the `active filters` widget in traditional search UIs. The users can adjust or remove them. 
     - A `fork` button that branches off the current set of preferences to a new session, while adding the current session to a stack. Let users jump back and forth. 
     - Something like a _shopping bag_, that users can add items to and compare them all at once. Currently, the interface only lets you compare products with the _current_ set of preferences. 
     - Making the recommendation page shared by someone _editable_ so I could start off from the original, and tweak preferences to generate new recommendations. 
+    - Similar to the previous point, `persisting` search sessions. Resuming a search by typing in the search bar all over again is painful. 
     - `Natural language input`? I know a questionnaire is better to start with, but given a set of recommendations, interaction with them could be made conversational. Say, asking if this particular phone is rugged, and the interface translating that to the relevant attribute (screen material?). 
     - Marking some preferences as `hard constraints`. Sometimes, I really only want to see phones with stock Android. Amazon search interface does provide this, but it is not guaranteed the necessary attribute shows up in the list of auto-generated facets. 
 
@@ -93,7 +99,7 @@ The product-finder setting is like a decision support system. Per their descript
   - When setting up a new product catalog, what parts can be automated vs constructing the product ontology manually? 
 
 - Preference modeling
-  - Product preferences aren't monotonic, the same user could simultaneously like products with values for the same attribute. 
+  - Product preferences aren't monotonic, the same user could simultaneously like products with low/high values for an attribute, but not midway. 
   - Tension between prompting the user for more input vs not interrupting them too often. 
   - Computing user utility as a linear sum of attribute weights vs more general learning to rank models? 
   - Making comparisons visual. 
@@ -102,17 +108,25 @@ The product-finder setting is like a decision support system. Per their descript
   - How do you measure platform performance if the search session doesn't end with a purchase? Is the goal recommending what someone will buy, vs what they like? 
   - Length of search sessions could be a good metric, or say, the number of inputs a user had to provide. Though short sessions could equally mean the user quickly found what they were looking for, or that they got frustrated and left!  
 
+- Interaction design
+  - Yep, no clue here besides silly ideas I mentioned above. 
+
 
 ## Things I am curious about
 
 ### Machine Learning
 
-Curious how the founders think about it. To me, it feels like UX is a bigger component than making a better recommendation engine. 
+I'm curious how the developers think about it. How the system-user interaction is designed and reliable product information both feel more important than the recommendation algorithm. People enjoy shopping and looking through options. Until it is something the user have clearly expressed dislike for, we should expose it to them. 
 
-A simple way to model the core ranking problem would be as a weighted MAX-SAT. 
-- User preferences on product attributes are constraints. 
-- Utility for an item is a weighted linear combination of its attributes' values. 
-- The objective is to find the maximum utility over the catalog. 
+ML could definitely be used to inform the product design. For ex, mining online reviews of a product category for aspects/features people care the most about. Though for the core ranking problem, given the size of the catalog is only a few hundreds, brute force ranking could be good enough. 
+
+As a baseline, the core ranking problem could be modeled similar to weighted MAX-SAT. 
+- User preferences on product attributes are modeled as boolean constraints. 
+- Utility for an item is a weighted linear combination of these constraints. 
+- Go over the full catalog and evaluate each item on every constraint. Sum up the scores for each item, and use it for ranking. 
+- If no item satisfies all the constraints, we could pick the ones with highest scores and specify which constraint needs to be relaxed for it to be considered. This also yields _explanations_ for our recommendations. 
+
+The tricky part however would be learning the attribute weights. Equal weights to each is a resonable prior, but with a lot of attributes correlated, it might not hold well. Considering preferences for a camera good in low light settings and a camera with a high resolution, a phone will generally satisfy both and not just one. Counting the number of constraints thus is not a good scoring method. 
 
 ### Growth
 
@@ -120,14 +134,13 @@ How do you get more people to use it?
 
 #### SEO
 
-- Is SEO helpful? Google results are dominated by listicles and product aggregators, for ex, "the best phones for older people". 
-- The lacking bit about those lists is you can't refine them, I wonder if that could be an acquisition channel here! 
-- Create PerfectRec sessions corresponding to common use cases, and make recommendation sets out of them. Let users branch off from there and tweak preferences to their needs.  
+- Is SEO helpful? Google search results are dominated by listicles and product aggregators, for ex, "the best phones for older people". The lacking bit about those lists is they aren't interactive. That is, you can't refine them and you are left with Amazon links if you want to compare. 
+- I wonder if that could be an acquisition channel here. Create PerfectRec recommendation sessions corresponding to common use cases and publish them. Let users branch off from there and tweak preferences to their needs.  
 
+#### Conversations
 
-### Conversations
-- People ask for recommendations on public forums like reddit or P2P chats. Could this be made easier? 
-- Can you make small (maybe embeddable) tools that can be spinned up quickly to highlight the comparison they are making? Serializable search state should make it easy. 
+- People ask for recommendations on public forums like reddit or P2P conversations. Could that be made easier? 
+- Can you make small (maybe embeddable) tools that can be spinned up quickly to highlight the comparison they are making? Serializable search state should help with it. 
 
 ### Revenue
 
