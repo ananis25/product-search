@@ -150,3 +150,14 @@ The website lists auction ads as a possible monetization strategy. The closest m
 - Finding relevant ads is a a lot easier compared to a shopping website since the user representation is more concrete. However, most relevant items are likely to show up in our recommendations anyway! There must be theory on how to balance both. 
 - Attribution is straightforward though, either of views/clicks work. 
 - Are there existing APIs or ad marketplaces you could directly plug into? A more refined version of Google Adsense? 
+
+There are some other businesses in this domain with interesting revenue strategies. For example, `Chumbox advertising` like the omnipresent Taboola ads, which sort of mix content and advertising? The revenue seems to come through affiliate links and service signups. Some references below, mostly from Byrne Hobart's twitter. 
+
+- A good description of Taboola, [link](https://www.thediff.co/archive/chumboxes-or-trust-busters-taboola/)
+- Tweet about Taboola deal with Yahoo, [link](https://twitter.com/ByrneHobart/status/1597609963957927937)
+- Tweet about a company making credit card infomercials, [link](https://twitter.com/ElamBend/status/1597611985751142400)
+
+`Health insurance` is another domain with sparse purchase behavior but a lot of complexity to navigate. 
+
+- Another Byrne Hobart's [tweet](https://twitter.com/ByrneHobart/status/1602865269596393472)
+- There seem to be companies which help make decisions for healthcare alone, [Budgie Health](https://www.budgie-health.com/)
