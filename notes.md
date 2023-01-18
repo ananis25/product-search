@@ -7,21 +7,21 @@ The idea of a (product-finder?) tool to help users make the optimal purchase is 
 
 ## Bits I liked in PerfectRec
 
-The user interface is pretty neat. When looking into products of the same kind (laptop/phone/etc), an adaptive questionnaire learns user intent better than a text query input. 
+The user interface is pretty neat. When looking into products of the same kind (laptop/phone/etc), an adaptive questionnaire can learn user intent better than a text query input. 
 
-- Recommendation based on explicit product attributes rather than collaborative filtering 
+- Recommendation based on explicit product attributes rather than collaborative filtering over past interactions
   - Unlike consumables/clothes/media, the product attributes for a phone or laptop are ummm.. more _objective_? For ex, aesthetic of a particular sneakers line is sort of nebulous, so it needs to be modeled using aggregated shopping data. Say, clustering user profiles with similar purchases. Whereas, the utility of electronic purchases can be better decomposed into product specifications, like battery life and camera quality. 
   - Electronic purchases are expensive, so the cost of a sub-optimal recommendation is high. Also, people don't buy them very often, so I am curious how much signal can be derived from sparse purchase data. For ex, shopping search results over-index on popularity when ranking ("similar users also bought this"). 
 
 - Serializable search state
-  - People often seek recommendations from friends, so tracking user supplied responses as an attribute-value map makes sharing easy. However, I don't know if there is randomization/A-B testing involved since the ranked results will show up differently in that case. 
+  - People often seek recommendations from friends, so tracking user supplied responses about their preferences as an attribute-value map makes sharing easy. However, I don't know if there is randomization/A-B testing involved since the ranked results will show up differently in that case. 
   - It also makes the recommendation engine interpretable by stating which preferences each product is compatible with (or not). This makes comparisons easier. 
 
 - Incremental elicitation of user preferences
-  - This is cool since long forms gets boring soon. Letting users browse the current best matches whle giving them the option to improve it by adding more details is neat. 
+  - This is cool since long form questionnaires get boring soon. Letting users browse the current best matches whle giving them the option to improve it by adding more details is neat. 
 
 - Expert evaluation of catalog
-  - This really depends on the quality of expert analysis. When done well, it ensures baseline quality of the products displayed and  reduces chance of a bad purchase. 
+  - This really depends on the quality of expert analysis. When done well, it ensures baseline quality of the products displayed and reduces chance of a bad purchase. 
   - Scaling the quality of a product on important aspects, like camera quality or suitability for work, to a linear score, is also nice. 
 
 
@@ -80,7 +80,7 @@ Thinking through ways to improve PerfectRec as a shopping assistant.
     - Something like a _shopping bag_, that users can add items to and compare them all at once. Currently, the interface only lets you compare products with the _current_ set of preferences. 
     - Making the recommendation page shared by someone _editable_ so I could start off from the original, and tweak preferences to generate new recommendations. 
     - Similar to the previous point, `persisting` search sessions. Resuming a search by typing in the search bar all over again is painful. 
-    - `Natural language input`? I know a questionnaire is better to start with, but given a set of recommendations, interaction with them could be made conversational. Say, asking if this particular phone is rugged, and the interface translating that to the relevant attribute (screen material?). 
+    - `Natural language input`? I know a questionnaire is better to start with, but given a set of recommendations, interaction with them could be made conversational. Say, asking if this particular phone is good for rugged usage, and the interface translating that to the relevant attribute (screen material?). 
     - Marking some preferences as `hard constraints`. Sometimes, I really only want to see phones with stock Android. Amazon search interface does provide this, but it is not guaranteed the necessary attribute shows up in the list of auto-generated facets. 
 
 - Mixed initiative input
@@ -109,7 +109,7 @@ The product-finder setting is like a decision support system. Per their descript
   - Length of search sessions could be a good metric, or say, the number of inputs a user had to provide. Though short sessions could equally mean the user quickly found what they were looking for, or that they got frustrated and left!  
 
 - Interaction design
-  - Yep, no clue here besides silly ideas I mentioned above. 
+  - Yep, no clue here besides the silly ideas I mentioned above. 
 
 
 ## Things I am curious about
