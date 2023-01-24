@@ -60,9 +60,11 @@ The disadvantage is having a limited set of options and a sales person biased to
 
 ### Possible alternatives
 
-I found a stealth startup called [Tonita](https://www.tonita.co/) with the objective of "reimagining online commerce search". Considering previous work from one of the founders, they seem to build around a natural language based search experience. When launched, I expect it looks something akin to Google shopping, but more conversational. 
+- I found a stealth startup called [Tonita](https://www.tonita.co/) with the objective of "reimagining online commerce search". Considering previous work from one of the founders, they seem to build around a natural language based search experience. When launched, I expect it looks something akin to Google shopping, but more conversational. 
 
-The Google shopping system is described in this [paper](https://arxiv.org/abs/2109.00702). 
+    The Google shopping system is described in this [paper](https://arxiv.org/abs/2109.00702). 
+
+- [Looria](https://www.looria.com) seems to be another interesting product that curates product recommendations from Reddit comments and online reviews. Though, the search filters are primitive and exploration is left to the user. With better UX, they could be a good alternative too. 
 
 ## Feature ideas
 
